@@ -1,0 +1,11 @@
+from models.item import ItemModel
+
+
+def test_crud(tc_app_db_env):
+    with tc_app_db_env():
+        item = ItemModel('test name', 99.9)
+        assert ItemModel.find_by_name('test name') is None, f"Found an item with name '{item.name}', but expected not to"
+        item.save_to_db()
+        assert ItemModel.find_by_name('test name') is not None, f"Item '{item.name}' was not added to the database"
+        item.delete_from_db()
+        assert ItemModel.find_by_name('test name') is None, f"Item '{item.name}' was not deleted from the database"
