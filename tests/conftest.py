@@ -10,10 +10,8 @@ def tc_app_db_env():
     with app.app_context():
         db.init_app(app)
         db.create_all()
-    # Get a test client
-    tc_app = app.test_client()
-    tc_app_context = app.app_context
-    yield tc_app_context
+    # Getting a test client
+    yield app.test_client, app.app_context
     # Cleaning Database after test
     with app.app_context():
         db.session.remove()

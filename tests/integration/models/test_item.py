@@ -3,7 +3,8 @@ from models.store import StoreModel
 
 
 def test_crud(tc_app_db_env):
-    with tc_app_db_env():
+    tc_app, tc_app_context = tc_app_db_env
+    with tc_app_context():
         StoreModel('test').save_to_db()
         item = ItemModel('test name', 99.9, 1)
         assert ItemModel.find_by_name('test name') is None, \
@@ -17,7 +18,8 @@ def test_crud(tc_app_db_env):
 
 
 def test_store_relationship(tc_app_db_env):
-    with tc_app_db_env():
+    tc_app, tc_app_context = tc_app_db_env
+    with tc_app_context():
         store = StoreModel('test_store')
         item = ItemModel('test', 99.9, 1)
 
