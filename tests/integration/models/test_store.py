@@ -34,7 +34,7 @@ def test_store_relationship(tc_app_db_env):
 
 def test_store_json_without_items():
     store = StoreModel('test_store')
-    expected = {'name': 'test_store', 'items': []}
+    expected = {'id': None, 'name': 'test_store', 'items': []}
     assert store.json() == expected, "json method returns incorrect data with empty store"
 
 
@@ -45,5 +45,5 @@ def test_store_json_with_item(tc_app_db_env):
         item = ItemModel('test_item', 99.9, 1)
         store.save_to_db()
         item.save_to_db()
-        expected = {'name': 'test_store', 'items': [{'name': 'test_item', 'price': 99.9}]}
+        expected = {'id': 1, 'name': 'test_store', 'items': [{'name': 'test_item', 'price': 99.9}]}
         assert store.json() == expected, "json method returns incorrect data with one item in the store"

@@ -9,7 +9,7 @@ def test_create_store(tc_app_db_env):
         with tc_app_context():
             response = client.post('/store/test_store')
             assert response.status_code == 201
-            assert json.loads(response.data) == {'name': 'test_store', 'items': []}
+            assert json.loads(response.data) == {'id': 1, 'name': 'test_store', 'items': []}
             assert StoreModel.find_by_name('test_store') is not None
 
 
@@ -40,7 +40,7 @@ def test_find_store(tc_app_db_env):
         with tc_app_context():
             client.post('/store/test_store')
             response = client.get('/store/test_store')
-            assert json.loads(response.data) == {'name': 'test_store', 'items': []}
+            assert json.loads(response.data) == {'id': 1, 'name': 'test_store', 'items': []}
             assert response.status_code == 200
 
 
@@ -61,7 +61,7 @@ def test_store_found_with_items(tc_app_db_env):
             StoreModel('test_store').save_to_db()
             ItemModel('test_item', 99.9, 1).save_to_db()
             response = client.get('/store/test_store')
-            assert json.loads(response.data) == {'name': 'test_store', 'items': [{'name': 'test_item', 'price': 99.9}]}
+            assert json.loads(response.data) == {'id': 1, 'name': 'test_store', 'items': [{'name': 'test_item', 'price': 99.9}]}
             assert response.status_code == 200
 
 
@@ -74,7 +74,7 @@ def test_store_list(tc_app_db_env):
             response = client.get('/stores')
             assert response.status_code == 200
             assert json.loads(response.data) == \
-                   {'stores': [{'name': 'test_store_1', 'items': []}, {'name': 'test_store_2', 'items': []}]}
+                   {'stores': [{'id': 1, 'name': 'test_store_1', 'items': []}, {'id': 2, 'name': 'test_store_2', 'items': []}]}
 
 
 def test_store_list_with_items(tc_app_db_env):
@@ -88,5 +88,5 @@ def test_store_list_with_items(tc_app_db_env):
             response = client.get('/stores')
             assert response.status_code == 200
             assert json.loads(response.data) == \
-                   {'stores': [{'name': 'test_store_1', 'items': [{'name': 'test_item_1', 'price': 11.1}]},
-                               {'name': 'test_store_2', 'items': [{'name': 'test_item_2', 'price': 2.2}]}]}
+                   {'stores': [{'id': 1, 'name': 'test_store_1', 'items': [{'name': 'test_item_1', 'price': 11.1}]},
+                               {'id': 2, 'name': 'test_store_2', 'items': [{'name': 'test_item_2', 'price': 2.2}]}]}
