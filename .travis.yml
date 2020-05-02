@@ -7,6 +7,6 @@ install:
 script: python -m pytest -v --tb=line tests/
 deploy:
   provider: heroku
-  app: "rapi-flask"
+  app: "https://rapi-flask.herokuapp.com/"
   api_key:
     secure: "f820cf7e-5334-41c1-81e0-c7598c568cff"
