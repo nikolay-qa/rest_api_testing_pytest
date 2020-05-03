@@ -5,3 +5,4 @@ Flask-JWT
 psycopg2-binary
 pytest
 Werkzeug
+gunicorn
